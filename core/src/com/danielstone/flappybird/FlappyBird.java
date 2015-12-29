@@ -2,12 +2,16 @@ package com.danielstone.flappybird;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 
 import java.util.Random;
+
 
 public class FlappyBird extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -16,6 +20,10 @@ public class FlappyBird extends ApplicationAdapter {
     TextureRegion bird2;
     Texture topTube;
     Texture bottomTube;
+
+    Circle birdCircle;
+
+    ShapeRenderer shapeRenderer;
 
     Random randomGenerator;
 
@@ -52,6 +60,9 @@ public class FlappyBird extends ApplicationAdapter {
         bottomTube = new Texture("bottomtube.png");
         maxTubeOffset = (Gdx.graphics.getHeight() / 2) - (gap / 2) - 100;
         distanceBetweenTubes = Gdx.graphics.getWidth() / 2;
+
+        shapeRenderer = new ShapeRenderer();
+        birdCircle = new Circle();
 
         for (int i = 0; i < numberOfTubes; i++) {
 
@@ -112,6 +123,12 @@ public class FlappyBird extends ApplicationAdapter {
             batch.draw(currentFrame, (Gdx.graphics.getWidth() / 2) - (bird1.getRegionWidth() / 2), birdY);
             batch.end();
 
+            birdCircle.set(Gdx.graphics.getWidth() / 2, birdY + bird1.getRegionHeight() / 2, bird1.getRegionWidth() / 2);
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.circle(birdCircle.x, birdCircle.y, birdCircle.radius);
+            shapeRenderer.end();
         }
 
 }
