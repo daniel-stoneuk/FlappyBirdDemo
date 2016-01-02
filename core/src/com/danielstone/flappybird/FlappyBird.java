@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -69,9 +68,9 @@ public class FlappyBird extends ApplicationAdapter {
         batch = new SpriteBatch();
         background = new Texture("bg.png");
 
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("flappybirdfont.fnt"));
         font.setColor(Color.WHITE);
-        font.getData().setScale(10);
+        font.getData().setScale(3);
 
         bird1 = new TextureRegion(new Texture("bird.png"));
         bird2 = new TextureRegion(new Texture("bird2.png"));
@@ -186,7 +185,7 @@ public class FlappyBird extends ApplicationAdapter {
 
                 }
 
-                if (Gdx.input.justTouched() && (stateTime - 1f) > deathTime) {
+                if (Gdx.input.justTouched() && (stateTime - 0.5f) > deathTime) {
 
                     gameState = 1;
                     gameScore = 0;
@@ -210,13 +209,12 @@ public class FlappyBird extends ApplicationAdapter {
             }
 
             if (gameState == 2) {
-                font.draw(batch, "Game Over...", 0, screenHeight / 2, screenWidth, 1, true);
+                font.draw(batch, "Game Over...", 100, screenHeight / 2 + ((font.getLineHeight() * 2) / 2), screenWidth - 100, 1, true);
             }
 
             batch.draw(currentFrame, (screenWidth / 2) - (bird1.getRegionWidth() / 2), birdY);
 
             font.draw(batch, String.valueOf(gameScore), 0, screenHeight - 50, screenWidth, 1, false);
-
 
 
             birdCircle.set(screenWidth / 2, birdY + bird1.getRegionHeight() / 2, bird1.getRegionWidth() / 2);
